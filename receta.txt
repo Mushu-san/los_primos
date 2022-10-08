@@ -1,0 +1,365 @@
+revisar receta
+
+---CREACION DE TABLA CATALOGO ESTADOS
+CREATE TABLE catalogo_estado (
+id_catalogo_estados int4 NOT NULL GENERATED always AS IDENTITY, 
+nombre varchar NULL,  
+descripcion varchar NULL,
+usuario_crea varchar(50) NULL, 
+usuario_modifica varchar(50) NULL, 
+fecha_creacion timestamp(0) NULL, 
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT catalogo_estado_pkey PRIMARY KEY (id_catalogo_estados)
+)
+
+CREATE TABLE dato_estado (
+id_estado int4 NOT NULL GENERATED always AS IDENTITY,
+id_catalogo_estados int4 NOT NULL,
+nombre varchar NULL ,
+descripcion varchar NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT dato_estado_pkey PRIMARY KEY (id_estado),
+CONSTRAINT fk_catalogo_estado FOREIGN KEY (id_catalogo_estados) REFERENCES catalogo_estado (id_catalogo_estados)
+)
+
+---CREACION DE TABLA AEROPUERTOS
+CREATE TABLE aeropuertos (
+id_aeropuerto int4 NOT NULL GENERATED always AS IDENTITY,
+nombre_aeropuerto varchar NOT NULL,
+abreviatura varchar NOT NULL,
+estado int4 NOT NULL, 
+ciudad varchar NOT NULL,
+pais varchar NOT NULL,
+usuario_crea varchar(50) NOT NULL, 
+usuario_modifica varchar(50) NOT NULL,
+fecha_creacion timestamp(0) NULL, 
+fecha_modifica timestamp(0) NULL, 
+id_estado int4 NOT NULL,
+CONSTRAINT aeropuertos_pkey PRIMARY KEY (id_aeropuerto),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+
+
+
+---CREACION DE TABLA CLASES
+CREATE TABLE clases (
+id_clase int4 NOT NULL GENERATED always AS IDENTITY,
+nombre varchar NOT NULL,
+usuario_creacion varchar(50) NULL, 
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_estado int4 NOT NULL,
+CONSTRAINT clases_pkey PRIMARY KEY (id_clase),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+
+
+---CREACION DE TABLA AEROLINEA
+CREATE TABLE aerolineas (
+id_aerolinea int4 NOT NULL GENERATED always AS IDENTITY,
+nombre varchar NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_estado int4 NOT NULL,
+CONSTRAINT aerolineas_pkey PRIMARY KEY (id_aerolinea),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+---CREACION DE TABLA USUARIOS INTERNOS
+CREATE TABLE usuario_interno (
+id_usuario_interno int4 NOT NULL GENERATED alwas AS IDENTITY, 
+nombres varchar NOT NULL,
+apellidos varchar NOT NULL,
+contraseña text DEFAULT,
+id_estado int4 NOT NULL,
+telefono varchar NOT NULL,
+correo_principal varchar NOT NULL,
+login varchar(50) NOT NULL,
+id_rol int4 NOT NULL,
+id_aeropuerto int4 NOT NULL,
+id_aerolinea int4 NOT NULL,
+usuario_creacion varchar(50) NULL, 
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT usuario_interno_pkey PRIMARY KEY (id_usuario_interno);
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estados (id_estado);
+CONSTRAINT fk_id_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol);
+CONSTRAINT fk_id_aeropuerto FOREIGN KEY (id_aeropuerto) REFERENCES aeropuertos (id_aeropuerto);
+CONSTRAINT fk_id_aerolinea FOREIGN KEY (id_aerolinea) REFERENCES aerolinea (id_aerolinea);
+)
+---CREACION DE TABLA TRIPULACION
+CREATE TABLE tripulaciones (
+id_tripulacion int4 NOT NULL GENERATED alwas AS IDENTITY, 
+id_avion int4 NOT NULL,
+id_usuario_interno int4 NOT NULL,
+id_estado int4 NOT NULL,
+id_rol int4 NOT NULL, 
+id_aeropuerto_aerolinea int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT tripulaciones_pkey PRIMARY KEY (id_tripulacion);
+CONSTRAINT fk_id_avion FOREIGN KEY (id_avion) REFERENCES aviones (id_avion);
+CONSTRAINT fk_usuario_interno FOREIGN KEY (id_usuario_interno) REFERENCES usuario_interno (id_usuario_interno);
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estados (id_estado);
+CONSTRAINT fk_id_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol);
+CONSTRAINT fk_id_aeropuerto_aerolinea FOREIGN KEY (id_aeropuerto_aerolinea) REFERENCES aeropuerto_aerolinea (id_aeropuerto_aerolinea);
+)
+---CREACION DE TABLA PUERTA ABORDAJE
+CREATE TABLE puerta_abordaje (
+id_puerta_abordaje int4 NOT NULL GENERATED alwas AS IDENTITY, 
+id_aeropuerto int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_estado int4 NOT NULL,
+CONSTRAINT puerta_abordaje_pkey PRIMARY KEY (id_puerta_abordaje);
+CONSTRAINT fk_id_aeropuerto FOREIGN KEY (id_aeropuerto) REFERENCES aeropuertos (id_aeropuerto);
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estados (id_estado);
+)
+---CREACION DE TABLA AVIONES
+CREATE TABLE aviones (
+id_avion  int4 NOT NULL GENERATED alwas AS IDENTITY, 
+nombre varchar NOT NULL,
+marca varchar NOT NULL,
+modelo varchar NOT NULL,
+capacidad varchar NOT NULL,
+cantidad_asientos int4 NOT NULL,
+id_aeropueto_aerolinea int4 NOT NULL,
+id_estado int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT aviones_pkey PRIMARY KEY (id_avion);
+CONSTRAINT fk_id_aeropuerto_aerolinea FOREIGN KEY (id_aeropuerto_aerolinea) REFERENCES aeropuerto_aerolinea (id_aeropuerto_aerolinea);
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estados (id_estado);
+)
+---CREACION DE TABLA ROL
+CREATE TABLE rol (
+id_rol int4 NOT NULL GENERATED always AS IDENTITY, 
+nombre varchar NOT NULL,
+id_estado int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT rol_pkey PRIMARY KEY (id_rol),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+---CREACION DE TABLA AEROPUERTO AEROLINEA 
+CREATE TABLE aeropuerto_aerolinea (
+id_aeropuerto_aerolinea int4 NOT NULL GENERATED alwas AS IDENTITY, 
+aeropuerto_id int4 NOT NULL,
+aerolinea_id int4 NOT NULL,
+CONSTRAINT aeropuerto_aerolinea_pkey PRIMARY KEY (id_aeropuerto_aerolinea);
+)
+---CREACION DE TABLA ASIENTO
+CREATE TABLE asientos (
+id_asiento int4 NOT NULL GENERATED alwas AS IDENTITY, 
+id_avion int4 NOT NULL,
+id_estado int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT asientos_pkey PRIMARY KEY (id_asiento);
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estados (id_estado);
+CONSTRAINT fk_id_avion FOREIGN KEY (id_avion) REFERENCES aviones (id_avion);
+)
+---CREACION DE TABLA CLIENTE
+CREATE TABLE clientes (
+pasaporte varchar NOT NULL,
+nombre varchar NOT NULL,
+email varchar NOT NULL,
+telefono varchar NOT NULL,
+tel_emergencia varchar NOT NULL,
+direccion varchar NOT NULL,
+id_rol int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_estado int4 NOT NULL,
+CONSTRAINT clientes_pkey PRIMARY KEY (pasaporte),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
+)
+
+
+---CREACION DE TABLA PUERTA ABORDAJE
+CREATE TABLE puerta_abordaje (
+id_puerta_abordaje int4 NOT NULL GENERATED always AS IDENTITY, 
+id_aeropuerto int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_estado int4 NOT NULL,
+CONSTRAINT puerta_abordaje_pkey PRIMARY KEY (id_puerta_abordaje),
+CONSTRAINT fk_id_aeropuerto FOREIGN KEY (id_aeropuerto) REFERENCES aeropuertos (id_aeropuerto),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+
+---CREACION DE TABLA AEROPUERTO AEROLINEA 
+CREATE TABLE aeropuerto_aerolinea (
+id_aeropuerto_aerolinea int4 NOT NULL GENERATED always AS IDENTITY, 
+aeropuerto_id int4 NOT NULL,
+aerolinea_id int4 NOT NULL,
+CONSTRAINT aeropuerto_aerolinea_pkey PRIMARY KEY (id_aeropuerto_aerolinea)
+)
+
+
+---CREACION DE TABLA AVIONES
+CREATE TABLE aviones (
+id_avion  int4 NOT NULL GENERATED always AS IDENTITY, 
+nombre varchar NOT NULL,
+marca varchar NOT NULL,
+modelo varchar NOT NULL,
+capacidad varchar NOT NULL,
+cantidad_asientos int4 NOT NULL,
+id_aeropueto_aerolinea int4 NOT NULL,
+id_estado int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT aviones_pkey PRIMARY KEY (id_avion),
+CONSTRAINT fk_id_aeropuerto_aerolinea FOREIGN KEY (id_aeropueto_aerolinea) REFERENCES aeropuerto_aerolinea (id_aeropuerto_aerolinea),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado)
+)
+
+
+CREATE TABLE asientos (
+id_asiento int4 NOT NULL GENERATED always AS IDENTITY, 
+id_avion int4 NOT NULL,
+id_estado int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT asientos_pkey PRIMARY KEY (id_asiento),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_avion FOREIGN KEY (id_avion) REFERENCES aviones (id_avion)
+)
+
+CREATE TABLE usuario_interno (
+id_usuario_interno int4 NOT NULL GENERATED always AS IDENTITY, 
+nombres varchar NOT NULL,
+apellidos varchar NOT NULL,
+contraseña text not null,
+id_estado int4 NOT NULL,
+telefono varchar NOT NULL,
+correo_principal varchar NOT NULL,
+login varchar(50) NOT NULL,
+id_rol int4 NOT NULL,
+id_aeropuerto int4 NOT NULL,
+id_aerolinea int4 NOT NULL,
+usuario_creacion varchar(50) NULL, 
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT usuario_interno_pkey PRIMARY KEY (id_usuario_interno),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
+CONSTRAINT fk_id_aeropuerto FOREIGN KEY (id_aeropuerto) REFERENCES aeropuertos (id_aeropuerto),
+CONSTRAINT fk_id_aerolinea FOREIGN KEY (id_aerolinea) REFERENCES aerolineas (id_aerolinea)
+)
+
+---CREACION DE TABLA TRIPULACION
+CREATE TABLE tripulaciones (
+id_tripulacion int4 NOT NULL GENERATED always AS IDENTITY, 
+id_avion int4 NOT NULL,
+id_usuario_interno int4 NOT NULL,
+id_estado int4 NOT NULL,
+id_rol int4 NOT NULL, 
+id_aeropuerto_aerolinea int4 NOT NULL,
+usuario_creacion varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+CONSTRAINT tripulaciones_pkey PRIMARY KEY (id_tripulacion),
+CONSTRAINT fk_id_avion FOREIGN KEY (id_avion) REFERENCES aviones (id_avion),
+CONSTRAINT fk_usuario_interno FOREIGN KEY (id_usuario_interno) REFERENCES usuario_interno (id_usuario_interno),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
+CONSTRAINT fk_id_aeropuerto_aerolinea FOREIGN KEY (id_aeropuerto_aerolinea) REFERENCES aeropuerto_aerolinea (id_aeropuerto_aerolinea)
+)
+
+CREATE TABLE vuelos (
+id_vuelo int4 NOT NULL GENERATED always AS IDENTITY, 
+aeropuerto_salida int4 NOT NULL,
+aeropuerto_llegada int4 NOT NULL, 
+id_avion int4 NOT NULL, 
+id_tripulacion int4 NOT NULL, 
+id_estado int4 NOT NULL, 
+fecha_salida timestamp(0) NULL,
+fecha_llegada timestamp(0) NULL,
+usuario_crea varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) NULL,
+id_puerta_abordaje int4 NOT null,
+CONSTRAINT vuelos_pkey PRIMARY KEY (id_vuelo),
+CONSTRAINT fk_id_avion FOREIGN KEY (id_avion) REFERENCES aviones (id_avion),
+CONSTRAINT fk_id_tripulacion FOREIGN KEY (id_tripulacion) REFERENCES tripulaciones (id_tripulacion),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_puerta_abordaje FOREIGN KEY (id_puerta_abordaje) REFERENCES puerta_abordaje (id_puerta_abordaje),
+CONSTRAINT fk_aeropuerto_llegada FOREIGN KEY (aeropuerto_llegada) REFERENCES aeropuertos (id_aeropuerto),
+CONSTRAINT fk_aeropuerto_salida FOREIGN KEY (aeropuerto_salida) REFERENCES aeropuertos (id_aeropuerto)
+----REVISAR LA DE AEROPUERTO SALIDA ENTRADA 
+);
+
+CREATE TABLE boletos (
+id_boleto int4 NOT NULL GENERATED always AS IDENTITY, 
+id_cliente varchar NOT NULL,
+id_estado int4 NOT NULL, 
+id_vuelo int4 NOT NULL,
+fecha_creacion timestamp(0) NULL,
+usuario_crecion varchar(50) NULL ,
+fecha_modifica timestamp(0) NULL,
+usuario_modifica varchar(50) NULL,
+CONSTRAINT boletos_pkey PRIMARY KEY (id_boleto),
+CONSTRAINT fk_id_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (pasaporte),
+CONSTRAINT fk_id_estado FOREIGN KEY (id_estado) REFERENCES dato_estado (id_estado),
+CONSTRAINT fk_id_vuelo FOREIGN KEY (id_vuelo) REFERENCES vuelos (id_vuelo)
+);
+
+CREATE TABLE boleto_detalle (
+id_boleto_detalle int4 NOT NULL GENERATED always AS IDENTITY, 
+id_boleto int4 NOT NULL, 
+id_asiento int4 NOT NULL, 
+cantidad_maletas int4 NULL, 
+precio int4 NOT NULL, 
+id_clase int4 NOT NULL, 
+usuario_creacion varchar(50) NULL, 
+usuario_modifica varchar(50) NULL,
+fecha_creacion  timestamp(0) NULL,
+fecha_modifica timestamp(0) null,
+CONSTRAINT boleto_detalle_pkey PRIMARY KEY (id_boleto_detalle),
+CONSTRAINT fk_id_asiento FOREIGN KEY (id_asiento) REFERENCES asientos (id_asiento),
+CONSTRAINT fk_id_boleto FOREIGN KEY (id_boleto) REFERENCES boletos (id_boleto),
+CONSTRAINT fk_id_clase FOREIGN KEY (id_clase) REFERENCES clases (id_clase)
+)
+
+
+CREATE TABLE vuelo_clase (
+id_vuelo int4 NOT NULL GENERATED always AS IDENTITY, 
+id_clase int4 NOT NULL,
+precio int4 NOT NULL, 
+usuario_crea varchar(50) NULL,
+usuario_modifica varchar(50) NULL,
+fecha_creacion timestamp(0) NULL,
+fecha_modifica timestamp(0) null,
+CONSTRAINT vuelo_clase_pkey PRIMARY KEY (id_vuelo, id_clase),
+CONSTRAINT fk_id_vuelo_vuelo_clase FOREIGN KEY (id_vuelo) REFERENCES vuelos (id_vuelo),
+constraint fk_id_clase_vuelo_clase FOREIGN KEY (id_clase) REFERENCES clases (id_clase)
+);
