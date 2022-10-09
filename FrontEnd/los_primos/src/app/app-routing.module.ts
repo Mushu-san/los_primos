@@ -5,8 +5,11 @@ const routes: Routes = [
   {
     path: 'administracion',
     loadChildren: () => import('./administracion/administracion.module').then(m => m.AdministracionModule)
+  },
+  {
+    path: 'cliente',
+    loadChildren : () => import('./cliente/cliente.module').then(m => m.ClienteModule)
   }
-
 ];
 
 @NgModule({

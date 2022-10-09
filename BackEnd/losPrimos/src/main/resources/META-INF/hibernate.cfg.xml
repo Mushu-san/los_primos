@@ -14,5 +14,10 @@
     <property name="connection.password">1234</property>
     <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Aeropuertos"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Aerolineas"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Vuelos"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.VueloClaseId"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.VueloClase"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Boletos"/>
   </session-factory>
 </hibernate-configuration>

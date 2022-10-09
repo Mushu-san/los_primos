@@ -7,6 +7,7 @@ package com.aeropuerto.losprimos.losPrimos.controlador;
 
 import com.aeropuerto.losprimos.losPrimos.modelo.Aeropuertos;
 import com.aeropuerto.losprimos.losPrimos.servicio.AeropuertoService;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,15 @@ public class AeropuertoController {
     
     @PostMapping("")
     public Aeropuertos save(Aeropuertos k){
-    
-    return aeropuertoServices.save(k);
+        Aeropuertos h = new Aeropuertos();
+        h.setAbreviatura(k.getAbreviatura());
+        h.setCiudad(k.getCiudad());
+        h.setEstado(k.getEstado());
+        h.setFechaCreacion(new Date());
+        h.setFechaModifica(k.getFechaModifica());
+        h.setIdEstado(k.getIdEstado());
+        h.setNombreAeropuerto(k.getNombreAeropuerto());
+        
+    return aeropuertoServices.save(h);
     }
 }
