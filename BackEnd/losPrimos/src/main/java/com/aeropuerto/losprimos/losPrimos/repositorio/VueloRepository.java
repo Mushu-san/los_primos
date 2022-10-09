@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,10 +28,13 @@ public interface VueloRepository extends CrudRepository<Vuelos, Integer> {
     @Query(value = "select * from public.vuelos v \n"
             + "where v.aeropuerto_salida = :idAeSalida\n"
             + "and v.aeropuerto_llegada = :idAeLlegada\n"
-            + "and v.fecha_salida >= :fechaSalida \n"
-            + "and v.fecha_llegada <= :fechaLlegada",
-             nativeQuery = true)
-    List<Vuelos> findByParameters();
-    
+            + "and v.fecha_salida < to_date(:fechaLlegada, 'YYYY-MM-DD') \n"
+            + "and v.fecha_llegada >= to_date(:fechaSalida, 'YYYY-MM-DD') \n"
+            + "and v.id_estado = 1 ",
+            nativeQuery = true)
+
+    List<Vuelos> findByParameters(@Param("idAeSalida") Integer idAeropuertoSalida,
+            @Param("idAeLlegada") Integer idAeropuertoLlegada, @Param("fechaLlegada") String fechaLlegada, @Param("fechaSalida") String fechaSalida);
+
     Optional<Vuelos> findByIdVueloAndIdEstado(Integer id, Integer state);
 }

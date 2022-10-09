@@ -44,4 +44,10 @@ public class VueloController {
     public Vuelos findById(@RequestParam Integer id, @RequestParam Integer state){
         return vueloService.findById(id, state);
     }
+    
+    @GetMapping(path = "/byReservation")
+    public List<Vuelos> findVuelosForReservation(@RequestParam Integer aeropuertoSalida,@RequestParam Integer aeropuertoLlegada,
+            @RequestParam String fechaLlegada, @RequestParam String fechaSalida){
+        return vueloService.findVuelosByReservationPage(aeropuertoSalida, aeropuertoLlegada, fechaLlegada, fechaSalida);
+    }
 }

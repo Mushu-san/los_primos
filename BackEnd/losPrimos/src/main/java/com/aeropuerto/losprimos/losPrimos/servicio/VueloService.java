@@ -39,4 +39,8 @@ public class VueloService {
     public Vuelos findById(Integer idVuelo, Integer state){
         return vueloRepository.findByIdVueloAndIdEstado(idVuelo, state).orElseThrow(() -> new RuntimeException("El vuelo que ha elegido no ha sido encontrado"));
     }
+    
+    public List<Vuelos> findVuelosByReservationPage(Integer aeropuertoSalida, Integer aeropuertoLlegada, String fechaLlegada, String fechaSalida){
+        return vueloRepository.findByParameters(aeropuertoSalida, aeropuertoLlegada, fechaLlegada, fechaSalida);
+    }
 }
