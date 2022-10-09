@@ -19,4 +19,6 @@ public interface AeropuertoRepository extends CrudRepository<Aeropuertos, Intege
     
     @Override
     List<Aeropuertos> findAll();
+    
+    List<Aeropuertos> findByIdEstado(Integer state);
 }

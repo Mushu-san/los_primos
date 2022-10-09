@@ -32,4 +32,10 @@ public class AeropuertoService {
     public List<Aeropuertos> findAll(){
         return aeropuertoRepository.findAll();
     }
+    
+    public  List<Aeropuertos> findByIdEstado(Integer state){
+        return aeropuertoRepository.findByIdEstado(state);
+    }
+    
+    
 }

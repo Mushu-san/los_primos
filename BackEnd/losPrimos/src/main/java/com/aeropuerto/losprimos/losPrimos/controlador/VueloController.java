@@ -10,10 +10,10 @@ import com.aeropuerto.losprimos.losPrimos.servicio.VueloService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -38,5 +38,10 @@ public class VueloController {
     public List<Vuelos> findVuelos() {
        List<Vuelos> vuelos = vueloService.findAll(); 
         return vuelos;
+    }
+    
+    @GetMapping(path = "/byId")
+    public Vuelos findById(@RequestParam Integer id, @RequestParam Integer state){
+        return vueloService.findById(id, state);
     }
 }

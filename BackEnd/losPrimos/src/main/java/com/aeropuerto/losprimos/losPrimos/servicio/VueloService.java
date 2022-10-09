@@ -34,4 +34,9 @@ public class VueloService {
         log.debug("pasa por aqui");
         return vueloRepository.findAll();
     }
+    
+    @Transactional(readOnly = true)
+    public Vuelos findById(Integer idVuelo, Integer state){
+        return vueloRepository.findByIdVueloAndIdEstado(idVuelo, state).orElseThrow(() -> new RuntimeException("El vuelo que ha elegido no ha sido encontrado"));
+    }
 }
