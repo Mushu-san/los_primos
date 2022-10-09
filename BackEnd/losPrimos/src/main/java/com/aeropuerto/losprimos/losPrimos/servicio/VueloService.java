@@ -5,8 +5,8 @@
  */
 package com.aeropuerto.losprimos.losPrimos.servicio;
 
-import com.aeropuerto.losprimos.losPrimos.modelo.Aeropuertos;
-import com.aeropuerto.losprimos.losPrimos.repositorio.AeropuertoRepository;
+import com.aeropuerto.losprimos.losPrimos.modelo.Vuelos;
+import com.aeropuerto.losprimos.losPrimos.repositorio.VueloRepository;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Slf4j
-@Transactional
-public class AeropuertoService {
+public class VueloService {
     
     @Autowired
-    AeropuertoRepository aeropuertoRepository;
+    VueloRepository vueloRepository;
     
-    public Aeropuertos save(Aeropuertos k){
-        return aeropuertoRepository.save(k);
+    
+    public List<Vuelos> findVuelosByState(Integer state){
+        return vueloRepository.findByIdEstado(state);
     }
     
-    public List<Aeropuertos> findAll(){
-        return aeropuertoRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<Vuelos> findAll(){
+        log.debug("pasa por aqui");
+        return vueloRepository.findAll();
     }
 }

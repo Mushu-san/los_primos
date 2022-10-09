@@ -8,15 +8,19 @@ package com.aeropuerto.losprimos.losPrimos.controlador;
 import com.aeropuerto.losprimos.losPrimos.modelo.Aeropuertos;
 import com.aeropuerto.losprimos.losPrimos.servicio.AeropuertoService;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author asacanoes
  */
-@RestController("/aeropuertos")
+@RestController
+@RequestMapping("/aeropuertos")
 public class AeropuertoController {
     @Autowired
     AeropuertoService aeropuertoServices;
@@ -33,5 +37,10 @@ public class AeropuertoController {
         h.setNombreAeropuerto(k.getNombreAeropuerto());
         
     return aeropuertoServices.save(h);
+    }
+    
+    @GetMapping(path = "all")
+    public List<Aeropuertos> findAll(){
+        return aeropuertoServices.findAll();
     }
 }
