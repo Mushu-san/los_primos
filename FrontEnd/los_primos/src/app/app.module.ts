@@ -20,7 +20,7 @@ import { GeneralModuleModule } from './general-module/general-module.module';
     ClienteModule,
     AdministracionModule,
     MaterialModule,
-    GeneralModuleModule
+    GeneralModuleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

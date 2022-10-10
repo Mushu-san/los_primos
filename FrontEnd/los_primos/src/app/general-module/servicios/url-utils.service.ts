@@ -11,8 +11,8 @@ export class UrlUtils {
 
   static toHeaders(params?: Param[]): HttpHeaders {
     var headers = new HttpHeaders();
-    params?.forEach((param: any) => {
-      headers = headers.append(param.key, param.value);
+    params?.forEach((param) => {
+      headers = headers.append(param["key"], param["value"]);
     });
     return headers;
   }

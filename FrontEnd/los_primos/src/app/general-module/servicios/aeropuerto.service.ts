@@ -10,10 +10,8 @@ export class AeropuertoService {
 
   constructor(private generalService: GeneralService) { }
 
-  getAeropuertosByState(state: number): Observable<any[]> {
-    console.log(this.url + `aeropuertos/${state}`);
-    
-    return this.generalService.getData<any[]>(this.url + `/aeropuerto/state/${state}`);
+  getAeropuertosByState(state: number): Observable<Object[]> {
+    return this.generalService.getData<Object[]>(this.url + `/aeropuerto/state/${state}`);
   }
 
 

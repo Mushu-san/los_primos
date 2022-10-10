@@ -28,8 +28,8 @@ public interface VueloRepository extends CrudRepository<Vuelos, Integer> {
     @Query(value = "select * from public.vuelos v \n"
             + "where v.aeropuerto_salida = :idAeSalida\n"
             + "and v.aeropuerto_llegada = :idAeLlegada\n"
-            + "and v.fecha_salida < to_date(:fechaLlegada, 'YYYY-MM-DD') \n"
-            + "and v.fecha_llegada >= to_date(:fechaSalida, 'YYYY-MM-DD') \n"
+            + "and v.fecha_salida < to_date(:fechaLlegada, 'DD-MM-YYYY') \n"
+            + "and v.fecha_llegada >= to_date(:fechaSalida, 'DD-MM-YYYY') \n"
             + "and v.id_estado = 1 ",
             nativeQuery = true)
 

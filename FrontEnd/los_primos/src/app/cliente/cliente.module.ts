@@ -13,7 +13,7 @@ import { ReservarVueloComponent } from './reservar-vuelo/reservar-vuelo.componen
   imports: [
     CommonModule,
     ClienteRoutingModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class ClienteModule { }

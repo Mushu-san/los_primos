@@ -1,8 +1,55 @@
 <div class="my-2 my-sm-3 my-md-4 my-lg-5 mx-2 mx-sm-3 mx-md-4 mx-lg-5">
-    <mat-card-title class="main-title">Reservación</mat-card-title>
-    <div class="row mt-2">
-        <mat-card>
-            <p>hola</p>
-        </mat-card>
-    </div>
+  <mat-card-title class="main-title">Reservación</mat-card-title>
+  <div class="row mt-2">
+    <mat-card>
+      <form [formGroup]="flyForm">
+        <mat-form-field>
+          <mat-label>Aeropuerto de salida</mat-label>
+          <mat-select formControlName="aeropuertoSalida">
+            <mat-option *ngFor="let airport of airports" [value]="airport.idAeropuerto">
+              {{airport.nombreAeropuerto}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Aeropuerto de llegada</mat-label>
+          <mat-select formControlName="aeropuertoLlegada">
+            <mat-option *ngFor="let airport of airports" [value]="airport.idAeropuerto">
+              {{airport.nombreAeropuerto}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Fecha de salida</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaSalida">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Fecha de llegada</mat-label>
+          <input matInput [matDatepicker]="picker2" formControlName="fechaLlegada">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <button mat-button color="primary" (click)="getVueloByParams()">
+            <mat-icon>search</mat-icon>
+            Buscar
+        </button>
+
+      </form>
+
+      <table *ngIf="flys" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="idAeropuerto">
+            <th mat-header-cell *matHeaderCellDef>Id</th>
+            <td mat-cell *matCellDef="let vuelo">{{vuelo.idVuelo}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+      </table>
+
+    </mat-card>
+  </div>
 </div>
