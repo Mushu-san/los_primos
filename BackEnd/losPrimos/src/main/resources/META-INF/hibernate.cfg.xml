@@ -17,6 +17,7 @@
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Aerolineas"/>
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Vuelos"/>
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.VueloClaseId"/>
+    <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Asientos"/>
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.VueloClase"/>
     <mapping class="com.aeropuerto.losprimos.losPrimos.modelo.Boletos"/>
   </session-factory>

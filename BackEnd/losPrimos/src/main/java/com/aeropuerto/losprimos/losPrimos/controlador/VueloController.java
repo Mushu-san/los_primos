@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author asacanoes
  */
 @RestController
-@RequestMapping("/fly")
+@RequestMapping("/vuelos")
 @Slf4j
 public class VueloController {
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class AeropuertoController {
     AeropuertoService aeropuertoServices;
     
     @PostMapping("")
-    public Aeropuertos save(Aeropuertos k){
+    public Aeropuertos save(@RequestBody Aeropuertos k){
         Aeropuertos h = new Aeropuertos();
         h.setAbreviatura(k.getAbreviatura());
         h.setCiudad(k.getCiudad());
