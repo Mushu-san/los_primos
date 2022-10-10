@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import { AeropuertoService } from 'src/app/general-module/servicios/aeropuerto.service';
 
 @Component({
   selector: 'app-reservar-vuelo',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservarVueloComponent implements OnInit {
 
-  constructor() { }
+  constructor(private aeropuertoService: AeropuertoService) { }
 
   ngOnInit(): void {
+    this.aeropuertoService.getAeropuertosByState(1).subscribe(data => {
+      console.log(data);
+    })
   }
 
 }
